@@ -4,6 +4,7 @@ import json
 import cv2
 import numpy as np
 import io
+import keras
 
 app = Flask(__name__)
 CORS(app)
@@ -33,12 +34,16 @@ def load_shards(path):
 
 
 def preprocessing(file):
+    # Save file to memory
     in_memory_file = io.BytesIO()
     file.save(in_memory_file)
+
+    # Get data from file
     data = np.fromstring(in_memory_file.getvalue(), dtype=np.uint8)
     img = cv2.imdecode(data, 0)
-    res = cv2.resize(img, dsize=(28, 28), interpolation=cv2.INTER_CUBIC)
-    return res
+    img = cv2.resize(img, dsize=(224, 224), interpolation=cv2.INTER_CUBIC)
+    img = keras.applications.mobilenet.preprocess_input(img)
+    return img
 
 
 if __name__ == "__main__":

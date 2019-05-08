@@ -3,6 +3,8 @@ import argparse
 from handlers.model_builder import Nima
 
 
+# FIXME: This script doesn't work as expected. Use the bash command in keras_to_tfjs.sh
+
 def main(keras_model_directory, web_model_directory):
 
     # Build keras model and load weights
@@ -11,7 +13,6 @@ def main(keras_model_directory, web_model_directory):
     nima.nima_model.load_weights(keras_model_directory)
 
     # Convert to tfjs model
-    # FIXME this doesn't work. Use .sh
     tfjs.converters.save_keras_model(nima, web_model_directory)
 
 
