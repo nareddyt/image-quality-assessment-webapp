@@ -23,13 +23,13 @@ def prepare():
 
 @app.route('/model')
 def model():
-    json_data = json.load(open("./model_js/model.json"))
+    json_data = json.load(open("./model_OLD/model.json"))
     return jsonify(json_data)
 
 
 @app.route('/<path:path>')
 def load_shards(path):
-    return send_from_directory('model_js', path)
+    return send_from_directory('model_OLD', path)
 
 
 def preprocessing(file):
@@ -38,8 +38,6 @@ def preprocessing(file):
     data = np.fromstring(in_memory_file.getvalue(), dtype=np.uint8)
     img = cv2.imdecode(data, 0)
     res = cv2.resize(img, dsize=(28, 28), interpolation=cv2.INTER_CUBIC)
-    # file.save("static/UPLOAD/img.png") # saving uploaded img
-    # cv2.imwrite("static/UPLOAD/test.png", res) # saving processed image
     return res
 
 

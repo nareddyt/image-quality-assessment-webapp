@@ -71,4 +71,4 @@ score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
-tfjs.converters.save_keras_model(model, "model_js")
+tfjs.converters.save_keras_model(model, "model_OLD")
