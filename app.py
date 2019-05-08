@@ -23,13 +23,13 @@ def prepare():
 
 @app.route('/model')
 def model():
-    json_data = json.load(open("./model_OLD/model.json"))
+    json_data = json.load(open("./web_model/model.json"))
     return jsonify(json_data)
 
 
 @app.route('/<path:path>')
 def load_shards(path):
-    return send_from_directory('model_OLD', path)
+    return send_from_directory('web_model', path)
 
 
 def preprocessing(file):
