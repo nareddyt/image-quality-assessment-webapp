@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../image-quality-assessment-webapp/.idea/TensorFlowJSClientSidePrediction.iml" filepath="$PROJECT_DIR$/../image-quality-assessment-webapp/.idea/TensorFlowJSClientSidePrediction.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../image-quality-assessment/.idea/image-quality-assessment.iml" filepath="$PROJECT_DIR$/../image-quality-assessment/.idea/image-quality-assessment.iml" />
+    </modules>
+  </component>
+</project>
