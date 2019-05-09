@@ -9,7 +9,7 @@ const numberOfFiles = document.getElementById("number-of-files");
 const fileInput = document.getElementById('file');
 
 const predict = async (modelURL) => {
-    if (!model) model = await tf.loadModel(modelURL);
+    if (!model) model = await tf.loadLayersModel(modelURL);
     const files = fileInput.files;
 
     [...files].map(async (img) => {
