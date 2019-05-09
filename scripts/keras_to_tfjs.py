@@ -9,6 +9,7 @@ def main(keras_model_weights, web_model_directory):
     nima = Nima('MobileNet', weights=None)
     nima.build()
     nima.nima_model.load_weights(keras_model_weights)
+    print(nima.nima_model.summary())
 
     # Convert to tfjs model
     tfjs.converters.save_keras_model(nima.nima_model, web_model_directory)
