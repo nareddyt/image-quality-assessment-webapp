@@ -12,7 +12,7 @@ const predict = async (modelURL) => {
     if (!model) model = await tf.loadLayersModel(modelURL);
     const files = fileInput.files;
 
-    [...files].map(async (img) => {
+    [...files].forEach(async (img) => {
         const data = new FormData();
         data.append('file', img);
 
@@ -21,14 +21,15 @@ const predict = async (modelURL) => {
                 method: 'POST',
                 body: data
             }).then(response => {
-                return response.json();
-            }).then(result => {
-                return tf.tensor2d(result['image']);
-            });
+            return response.json();
+        }).then(result => {
+            return tf.tensor2d(result['image']);
+        });
 
         // shape has to be the same as it was for training of the model
-        const prediction = model.predict(tf.reshape(processedImage, shape = [1, 28, 28, 1]));
-        const label = prediction.argMax(axis = 1).get([0]);
+        const reshapedImg = tf.reshape(processedImage, [224, 224, 3]);
+        const prediction = model.predict(reshapedImg);
+        const label = prediction.argMax(1).get([0]);
         renderImageLabel(img, label);
     })
 };
