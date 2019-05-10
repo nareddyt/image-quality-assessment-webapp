@@ -18,8 +18,9 @@ def main():
 @app.route("/api/prepare", methods=["POST"])
 def prepare():
     file = request.files['file']
-    res = preprocessing(file)
-    return json.dumps({"image": res.tolist()})
+    processed_data = preprocessing(file)
+    res = json.dumps({"image": processed_data.tolist()})
+    return res
 
 
 @app.route('/model')
@@ -39,11 +40,11 @@ def preprocessing(file):
     file.save(in_memory_file)
 
     # Get data from file
-    data = np.fromstring(in_memory_file.getvalue(), dtype=np.uint8)
-    img = cv2.imdecode(data, 0)
-    img = cv2.resize(img, dsize=(224, 224), interpolation=cv2.INTER_CUBIC)
-    img = keras.applications.mobilenet.preprocess_input(img)
-    return img
+    original_data = np.fromstring(in_memory_file.getvalue(), dtype=np.uint8)
+    original_img = cv2.imdecode(original_data, 1)     # flag=1: Load rgb channels
+    resized_img = cv2.resize(original_img, dsize=(224, 224), interpolation=cv2.INTER_CUBIC)
+    preprocessed_img = keras.applications.mobilenet.preprocess_input(resized_img)
+    return preprocessed_img
 
 
 if __name__ == "__main__":
