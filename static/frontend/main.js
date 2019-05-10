@@ -8,6 +8,8 @@ const clearButton = document.getElementById("clear");
 const numberOfFiles = document.getElementById("number-of-files");
 const fileInput = document.getElementById('file');
 
+const scores_tensor = tf.linspace(1.0, 10.0, 10);
+
 const predict = async (modelURL) => {
     if (!model) model = await tf.loadLayersModel(modelURL);
     const files = fileInput.files;
@@ -29,8 +31,11 @@ const predict = async (modelURL) => {
         // shape has to be the same as it was for training of the model
         const reshapedImg = tf.reshape(processedImage, [1, 224, 224, 3]);
         const prediction = model.predict(reshapedImg);
-        const label = prediction.argMax(1).get([0]);
-        renderImageLabel(img, label);
+        const score_tensor = tf.dot(prediction, scores_tensor);
+        const score_array = await score_tensor.data();
+        const score = score_array[0];
+
+        renderImageLabel(img, score);
     })
 };
 
