@@ -23,7 +23,7 @@ const predict = async (modelURL) => {
             }).then(response => {
             return response.json();
         }).then(result => {
-            return tf.tensor2d(result['image']);
+            return tf.tensor3d(result['image']);
         });
 
         // shape has to be the same as it was for training of the model
