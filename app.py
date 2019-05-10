@@ -41,9 +41,11 @@ def preprocessing(file):
 
     # Get data from file
     original_data = np.fromstring(in_memory_file.getvalue(), dtype=np.uint8)
-    original_img = cv2.imdecode(original_data, 1)     # flag=1: Load rgb channels
-    resized_img = cv2.resize(original_img, dsize=(224, 224), interpolation=cv2.INTER_CUBIC)
-    preprocessed_img = keras.applications.mobilenet.preprocess_input(resized_img)
+    original_img_bgr = cv2.imdecode(original_data, 1)     # flag=1: Load bgr channels
+    original_img_rgb = cv2.cvtColor(original_img_bgr, cv2.COLOR_BGR2RGB)
+    resized_img = cv2.resize(original_img_rgb, dsize=(224, 224))
+    img_data = np.asarray(resized_img)
+    preprocessed_img = keras.applications.mobilenet.preprocess_input(img_data)
     return preprocessed_img
 
 
