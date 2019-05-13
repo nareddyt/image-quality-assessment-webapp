@@ -43,7 +43,7 @@ const predict = async (modelURL) => {
         // shape has to be the same as it was for training of the model
         const reshapedImg = tf.reshape(processedImage, [1, IMAGE_SIZE, IMAGE_SIZE, 3]);
         const prediction = model.predict(reshapedImg, {batchSize: 1});
-        const score_tensor = tf.dot(prediction, scores_tensor);
+        const score_tensor = tf.dot(prediction.flatten(), scores_tensor);
         const score_array = await score_tensor.data();
         const score = score_array[0];
 
