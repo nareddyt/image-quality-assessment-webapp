@@ -1,6 +1,7 @@
 let model;
 
 const modelURL = 'http://localhost:5000/model';
+const IMAGE_SIZE = 224;
 
 const preview = document.getElementById("preview");
 const predictButton = document.getElementById("predict");
@@ -10,8 +11,19 @@ const fileInput = document.getElementById('file');
 
 const scores_tensor = tf.linspace(1.0, 10.0, 10);
 
+const load = async () => {
+    // Download the mode
+    model = await tf.loadLayersModel(modelURL);
+
+    // Warmup the model. This isn't necessary, but makes the first prediction
+    // faster. Call `dispose` to release the WebGL memory allocated for the return
+    // value of `predict`.
+    model.predict(tf.zeros([1, IMAGE_SIZE, IMAGE_SIZE, 3])).dispose();
+};
+
 const predict = async (modelURL) => {
     if (!model) model = await tf.loadLayersModel(modelURL);
+
     const files = fileInput.files;
 
     [...files].forEach(async (img) => {
@@ -29,8 +41,8 @@ const predict = async (modelURL) => {
         });
 
         // shape has to be the same as it was for training of the model
-        const reshapedImg = tf.reshape(processedImage, [1, 224, 224, 3]);
-        const prediction = model.predict(reshapedImg);
+        const reshapedImg = tf.reshape(processedImage, [1, IMAGE_SIZE, IMAGE_SIZE, 3]);
+        const prediction = model.predict(reshapedImg, {batchSize: 1});
         const score_tensor = tf.dot(prediction, scores_tensor);
         const score_array = await score_tensor.data();
         const score = score_array[0];
@@ -55,3 +67,6 @@ const renderImageLabel = (img, label) => {
 fileInput.addEventListener("change", () => numberOfFiles.innerHTML = "Selected " + fileInput.files.length + " files", false);
 predictButton.addEventListener("click", () => predict(modelURL));
 clearButton.addEventListener("click", () => preview.innerHTML = "");
+
+// Pre-load the model
+load();
