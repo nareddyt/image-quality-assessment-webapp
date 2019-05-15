@@ -14,7 +14,7 @@ def main(keras_model_weights_in):
     print(nima.nima_model.summary())
 
     # Save as full model + weights file
-    nima.nima_model.save('./keras_model/full_model.h5')
+    nima.nima_model.save('./keras_model/full_model_aesthetic.h5')
 
     # Convert to tfjs model
     tfjs.converters.save_keras_model(nima.nima_model, './web_model/')
