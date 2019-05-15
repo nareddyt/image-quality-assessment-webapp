@@ -1,10 +1,12 @@
+from keras.backend import manual_variable_initialization
 import tensorflowjs as tfjs
 import argparse
 from handlers.model_builder import Nima
 
+manual_variable_initialization(True)
+
 
 def main(keras_model_weights_in):
-
     # Build keras model and load weights
     nima = Nima('MobileNet', weights=None)
     nima.build()
