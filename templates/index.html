@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="../static/frontend/styles.css">
 </head>
 <body>
-<h1 class="title">TensorflowJS client side prediction</h1>
-<h2 class="title">When you first time press predict it will take more time, for model to load</h2>
+<h1 class="title">Image Aesthetic Quality Assessment</h1>
+<h3 class="title">Click on "Choose files" to pick 1 or more pictures, then click "Predict"</h3>
+<h3 class="title">Note: The first prediction might take a few extra seconds</h3>
 <main class="file-form">
     <input type="file" id="file" multiple class="file-form__select-file">
     <label for="file" class="file-form__select-file_label">Choose files</label>
+    <br/>
     <button type="submit" class="file-form__button file-form__button_predict" id="predict">Predict</button>
     <button type="submit" class="file-form__button file-form__button_clear" id="clear">Clear</button>
     <span class="file-form__files" id="number-of-files"></span>

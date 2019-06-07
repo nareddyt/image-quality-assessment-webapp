@@ -47,7 +47,7 @@ const predict = async (modelURL) => {
         const score_array = await score_tensor.data();
         const score = score_array[0];
 
-        renderImageLabel(img, score);
+        renderImageLabel(img, score.toFixed(2));
     })
 };
 
