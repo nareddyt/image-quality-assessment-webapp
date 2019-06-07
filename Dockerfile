@@ -1,14 +1,6 @@
-FROM python:3.6-alpine as base
+FROM jjanzic/docker-python3-opencv:opencv-4.1.0
 
-FROM base as builder
-RUN mkdir /install
-WORKDIR /install
-COPY requirements.txt /requirements.txt
-RUN pip install --install-option="--prefix=/install" -r /requirements.txt
-
-FROM base
-COPY --from=builder /install /usr/local
-COPY src /app
-WORKDIR /app
+COPY requirements.txt /
+RUN pip install -r /requirements.txt
 
 CMD ["python", "app.py"]
