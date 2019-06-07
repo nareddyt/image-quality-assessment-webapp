@@ -1,6 +1,6 @@
 let model;
 
-const modelURL = 'http://localhost:5000/model';
+const modelURL = '/model';
 const IMAGE_SIZE = 224;
 
 const preview = document.getElementById("preview");
